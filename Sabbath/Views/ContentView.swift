@@ -29,75 +29,30 @@ struct ContentView: View {
     // addressing the PreviewProvider crash
     var previewRunning = false
     
+    @State var selectedDateEvents: [Event] = []
+    
     // variable with correct user.id after onAppear of view
-    @FirestoreQuery(collectionPath: "users/\(Auth.auth().currentUser?.uid ?? "")/events") var events: [Event]
+    @FirestoreQuery(collectionPath: "users/\(Auth.auth().currentUser?.uid ?? "")/\(Date().getFullDate())") var events: [Event]
     
     var body: some View {
         NavigationStack {
             VStack {
                 CalendarMonthView(selectedDate: $selectedDate)
                     .padding()
-                
-                if selectedDate.getDayOfWeek() != user.sabbath {
-                    HStack {
-                        Button(action: {
-                            let calTask = CalendarTask(title: "New Task", dueDate: selectedDate)
-                            if calTasks[selectedDate] != nil {
-                                calTasks[selectedDate]?.append(calTask)
-                            } else {
-                                calTasks[selectedDate] = [calTask]
-                            }
-                        }) {
-                            Text("Add Task")
-                        }
-                        
-                        Button(action: {
-                            let reminder = Reminder(title: "New Reminder", dueDate: selectedDate)
-                            if reminders[selectedDate] != nil {
-                                reminders[selectedDate]?.append(reminder)
-                            } else {
-                                reminders[selectedDate] = [reminder]
-                            }
-                        }) {
-                            Text("Add Reminder")
-                        }
-                        
-                        Button("Add Event") {
-                            showEventSheet.toggle()
-                        }
-                    }
-                    .buttonStyle(.borderedProminent)
-                }
-                
-                Spacer()
-                Text("Selected Date: \(selectedDate.formatted(date: .abbreviated, time: .omitted))")
-                
-                List {
-                    if let selectedcalTasks = calTasks[selectedDate] {
-                        Text("Tasks:")
-                        ForEach(selectedcalTasks, id: \.id) { calTask in
-                            Text(calTask.title)
-                        }
-                    }
-                    
-                    if let selectedReminders = reminders[selectedDate] {
-                        Text("Reminders:")
-                        ForEach(selectedReminders, id: \.id) { reminder in
-                            Text(reminder.title)
-                        }
-                    }
-                    
-                    Text("Schedule:")
-                    ForEach(events, id: \.id) { event in
-                        Text(event.title)
-                    }
-                }
-                .listStyle(.plain)
+                ScheduleView(user: user, selectedDate: $selectedDate)
             }
             .sheet(isPresented: $showEventSheet) {
-                EventDetailView(user: user, event: Event())
+                EventDetailView(user: user, event: Event(startDate: selectedDate, endDate: (selectedDate + (60*60))))
             }
             .toolbar {
+                if selectedDate.getDayOfWeek() != user.sabbath {
+                    ToolbarItemGroup(placement: .bottomBar) {
+                        Button("Add to Schedule") {
+                            showEventSheet.toggle()
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Text("Hello \(user.firstName) \(user.lastName)")
                     NavigationLink{
@@ -106,14 +61,6 @@ struct ContentView: View {
                         Image(systemName: "person.crop.square")
                     }
                 }
-            }
-        }
-        .onAppear{
-            if !previewRunning && (Auth.auth().currentUser?.uid != nil)
-            {
-                print("events path: users/\(Auth.auth().currentUser?.uid ?? "")/events")
-                $events.path = " users/\(Auth.auth().currentUser?.uid ?? "")/events"
-                print("events: \(events)")
             }
         }
     }

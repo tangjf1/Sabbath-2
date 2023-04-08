@@ -13,6 +13,7 @@
 		DC23759A29E07D05004423E9 /* PlaceLookupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23759929E07D05004423E9 /* PlaceLookupView.swift */; };
 		DC23759C29E07DBD004423E9 /* EventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23759B29E07DBD004423E9 /* EventDetailView.swift */; };
 		DC23759E29E09468004423E9 /* EventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23759D29E09468004423E9 /* EventViewModel.swift */; };
+		DC2461F929E1A50C0084209C /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2461F829E1A50B0084209C /* ScheduleView.swift */; };
 		DC4E02D129DCD52C005A0343 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4E02D029DCD52C005A0343 /* LoginView.swift */; };
 		DC5029F129DC9EDB00A2E762 /* SabbathApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5029F029DC9EDB00A2E762 /* SabbathApp.swift */; };
 		DC5029F329DC9EDB00A2E762 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5029F229DC9EDB00A2E762 /* ContentView.swift */; };
@@ -41,6 +42,7 @@
 		DC23759929E07D05004423E9 /* PlaceLookupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceLookupView.swift; sourceTree = "<group>"; };
 		DC23759B29E07DBD004423E9 /* EventDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailView.swift; sourceTree = "<group>"; };
 		DC23759D29E09468004423E9 /* EventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewModel.swift; sourceTree = "<group>"; };
+		DC2461F829E1A50B0084209C /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
 		DC4E02D029DCD52C005A0343 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DC4E02D429DCDCFA005A0343 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DC5029ED29DC9EDB00A2E762 /* Sabbath.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sabbath.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,6 +136,7 @@
 				DC9F717929DDD54300C9607B /* ListUsersTest.swift */,
 				DCC61E2429DD3E7D00978239 /* UserSetUpView.swift */,
 				DC5029F229DC9EDB00A2E762 /* ContentView.swift */,
+				DC2461F829E1A50B0084209C /* ScheduleView.swift */,
 				DC502A1329DCB1AF00A2E762 /* CalendarMonthView.swift */,
 				DC23759B29E07DBD004423E9 /* EventDetailView.swift */,
 			);
@@ -250,6 +253,7 @@
 				DC502A1029DCA4AA00A2E762 /* Reminder.swift in Sources */,
 				DC5029F129DC9EDB00A2E762 /* SabbathApp.swift in Sources */,
 				DC502A1429DCB1AF00A2E762 /* CalendarMonthView.swift in Sources */,
+				DC2461F929E1A50C0084209C /* ScheduleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,6 +387,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sabbath/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Sabbath;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This app may require access to the device's location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app may require access to the device's location";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -412,6 +418,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sabbath/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Sabbath;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This app may require access to the device's location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app may require access to the device's location";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

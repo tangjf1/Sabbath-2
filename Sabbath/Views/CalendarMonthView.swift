@@ -19,11 +19,6 @@ struct CalendarMonthView: View {
     var user: User {
         return users.first(where: {$0.email == Auth.auth().currentUser?.email ?? ""}) ?? User()
     }
-    
-    func dateSelected(_ date: Date) {
-        print("Selected date: \(date)")
-        // Do something else here based on the selected date
-    }
     private let monthYearFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy"
@@ -51,11 +46,9 @@ struct CalendarMonthView: View {
             }
             LazyVGrid(columns: Array(repeating: GridItem(), count: 7)) {
                 ForEach(month.getDatesForMonth().sorted(by: { $0 < $1 }), id: \.self) { date in
-                    DateCell(date: date, isSelected: (selectedDate == date), mainMonth: month, sabbath: user.sabbath)
+                    DateCell(date: date, isSelected: (selectedDate.getFullDate() == date.getFullDate()), mainMonth: month, sabbath: user.sabbath)
                         .onTapGesture {
                             selectedDate = date
-                            dateSelected(date)
-                            print("\(selectedDate == date)")
                         }
                 }
             }
@@ -103,6 +96,12 @@ extension Date {
     func getDayOfMonth() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d"
+        return dateFormatter.string(from: self)
+    }
+    
+    func getFullDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yy"
         return dateFormatter.string(from: self)
     }
     

@@ -9,12 +9,27 @@ import SwiftUI
 import MapKit
 
 struct EventDetailView: View {
+    enum SaveAlert {
+        case sabbath, endDate
+        
+        var alert: String {
+            switch self {
+            case .sabbath:
+                return "Date chosen falls on your chosen day of Sabbath"
+            case .endDate:
+                return "Invalid end date"
+            }
+        }
+    }
+    @State private var saveAlert = SaveAlert.sabbath
     @Environment(\.dismiss) private var dismiss
     @StateObject var eventVM = EventViewModel()
     @EnvironmentObject var locationManager: LocationManager
     @State var user: User
     @State var event: Event
     @State private var showPlaceLookupSheet = false
+    // to show alert if user tries to write a review on new Spot before saving it first
+    @State private var showSaveAlert = false
     var body: some View {
         NavigationStack {
             List{
@@ -74,19 +89,53 @@ struct EventDetailView: View {
                     }
                 }
                 ToolbarItem (placement: .navigationBarTrailing) {
-                    Button("Save") {
-                        Task {
-                            let success = await eventVM.saveEvent(user: user, event: event)
-                            
-                            if success {
-                                dismiss()
-                            } else {
-                                print("😡 ERROR saving data in EventView")
+                    Button("\(event.id == nil ? "Save" : "Update")") {
+                        if (event.startDate.getDayOfWeek() == user.sabbath) || (event.endDate.getDayOfWeek() == user.sabbath) {
+                            saveAlert = .sabbath
+                            showSaveAlert.toggle()
+                        } else if (event.endDate.formatted(date: .abbreviated, time: .shortened) < event.startDate.formatted(date: .abbreviated, time: .shortened)) {
+                            saveAlert = .endDate
+                            showSaveAlert.toggle()
+                        } else {
+                            Task {
+                                let success = await eventVM.saveEvent(user: user, event: event)
+                                
+                                if success {
+                                    dismiss()
+                                } else {
+                                    print("😡 ERROR saving data in EventView")
+                                }
                             }
                         }
                     }
+                    .disabled(event.title.isEmpty)
+                }
+                if event.id != nil {
+                    ToolbarItemGroup(placement: .bottomBar) {
+                        
+                        Spacer()
+                        Button {
+                            Task {
+                                let success = await eventVM.deleteEvent(user: user, event: event)
+                                
+                                if success {
+                                    dismiss()
+                                } else {
+                                    print("😡 ERROR deleting data in ReviewView")
+                                }
+                            }
+                        } label: {
+                            Image(systemName: "trash")
+                        }
+                        
+                    }
                 }
                 
+            }
+            .alert("Cannot Save Event", isPresented: $showSaveAlert) {
+                Button("Edit Schedule Details", role: .cancel) {}
+            } message: {
+                Text(saveAlert.alert)
             }
             .navigationBarBackButtonHidden()
             .navigationBarTitleDisplayMode(.inline)
@@ -97,7 +146,7 @@ struct EventDetailView: View {
 struct EventDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            EventDetailView(user: User(), event: Event())
+            EventDetailView(user: User(), event: Event(id: "12345"))
                 .environmentObject(LocationManager())
         }
     }

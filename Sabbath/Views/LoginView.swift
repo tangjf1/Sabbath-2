@@ -86,12 +86,10 @@ struct LoginView: View {
             Button("OK", role: .cancel) {}
         }
         .onAppear{
-             //if logged in when app runs, navigate to the list view screen and skip log in screen
-//            if Auth.auth().currentUser != nil {
-//                print("user \(Auth.auth().currentUser?.email! ?? "") is logged in already")
-//                print("😎 Registration Success!")
-//                presentContentViewSheet = true
-//            }
+            if Auth.auth().currentUser != nil {
+                print("user \(Auth.auth().currentUser?.email! ?? "") is logged in already")
+                presentContentViewSheet = true
+            }
         }
         .fullScreenCover(isPresented: $presentUserSetUpSheet) {
             UserSetUpView(user: User(email: email))
