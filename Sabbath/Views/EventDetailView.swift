@@ -94,7 +94,7 @@ struct EventDetailView: View {
                         if (event.startDate.getDayOfWeek() == user.sabbath) || (event.endDate.getDayOfWeek() == user.sabbath) {
                             saveAlert = .sabbath
                             showSaveAlert.toggle()
-                        } else if (event.endDate.formatted(date: .abbreviated, time: .shortened) < event.startDate.formatted(date: .abbreviated, time: .shortened)) {
+                        } else if (event.endDate < event.startDate) {
                             saveAlert = .endDate
                             showSaveAlert.toggle()
                         } else {

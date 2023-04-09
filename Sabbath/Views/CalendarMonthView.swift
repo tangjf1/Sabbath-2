@@ -25,6 +25,8 @@ struct CalendarMonthView: View {
         return formatter
     }()
     
+    @FirestoreQuery(collectionPath: "users/\(Auth.auth().currentUser?.uid ?? "")/\(Date().getFullDate())") var events: [Event]
+    
     var body: some View {
         VStack {
             HStack {
@@ -65,6 +67,8 @@ struct DateCell: View {
     let mainMonth: Date
     let sabbath: String
     
+    @FirestoreQuery(collectionPath: "users/\(Auth.auth().currentUser?.uid ?? "")/\(Date().getFullDate())") var events: [Event]
+    
     var isSabbath: Bool {
         return date.getDayOfWeek() == sabbath
     }
@@ -78,7 +82,7 @@ struct DateCell: View {
             HStack {
                 Text(date.getDayOfMonth()).font(.title3).foregroundColor( isCurrentMonth ? .primary : .gray.opacity(0.5))
             }
-            if isSelected && !isSabbath {
+            if (!events.isEmpty) && !isSabbath {
                 Circle().foregroundColor(Color("SabbathPeach")).frame(width: 10, height: 10)
             } else {
                 Circle().opacity(0).frame(width: 10, height: 10)
@@ -89,6 +93,9 @@ struct DateCell: View {
         .overlay(RoundedRectangle(cornerRadius: 8).stroke((isSelected ? Color("SabbathBlue") : Color.clear), lineWidth: 4 ))
         .background(isSabbath ? Color("SabbathPink").opacity(isCurrentMonth ? 0.5 : 0.2) : Color.clear)
         .cornerRadius(8)
+        .onAppear{
+            $events.path = "users/\(Auth.auth().currentUser?.uid ?? "")/\(date.getFullDate())"
+        }
     }
 }
 
