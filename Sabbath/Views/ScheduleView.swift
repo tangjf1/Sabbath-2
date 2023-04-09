@@ -22,7 +22,6 @@ struct ScheduleView: View {
     
     var body: some View {
         VStack {
-            Text("Schedule for \(selectedDate.formatted(date: .abbreviated, time: .omitted))")
             List {
                 ForEach(events.sorted{ $0.startDate < $1.startDate }, id: \.id) { event in
                     NavigationLink {

@@ -32,7 +32,13 @@ struct ContentView: View {
             VStack {
                 CalendarMonthView(selectedDate: $selectedDate)
                     .padding()
-                ScheduleView(selectedDate: $selectedDate)
+                
+                if selectedDate.getDayOfWeek() != user.sabbath {
+                    Text("Schedule for \(selectedDate.formatted(date: .abbreviated, time: .omitted))")
+                    ScheduleView(selectedDate: $selectedDate)
+                } else {
+                    SabbathView(date: $selectedDate)
+                }
             }
             .sheet(isPresented: $showEventSheet) {
                 EventDetailView(user: user, event: Event(startDate: selectedDate, endDate: (selectedDate + (60*60))))
