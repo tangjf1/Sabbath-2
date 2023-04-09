@@ -8,17 +8,39 @@
 import SwiftUI
 
 struct SabbathView: View {
+    @EnvironmentObject var affirmationsVM: AffirmationsViewModel
     @Binding var date: Date
+    @State var affirmation = ""
     var body: some View {
         ScrollView {
-            VStack {
-                Image(date.getDayOfMonth())
-                    .resizable()
-                    .scaledToFit()
-                    .cornerRadius(8)
-                Spacer()
+            ZStack {
+                VStack {
+                    Text("\"\(affirmation)\"")
+                        .italic()
+                        .multilineTextAlignment(.center)
+                    Image(date.getDayOfMonth())
+                        .resizable()
+                        .scaledToFit()
+                        .cornerRadius(8)
+                    Spacer()
+                }
+                .padding()
+                
+                if affirmationsVM.isLoading {
+                    ProgressView()
+                        .scaleEffect(2)
+                }
             }
-            .padding()
+        }
+        .onAppear {
+            Task {
+                affirmation = await affirmationsVM.getAffirmation()
+            }
+        }
+        .onChange(of: date) { _ in
+            Task {
+                affirmation = await affirmationsVM.getAffirmation()
+            }
         }
     }
 }
@@ -26,5 +48,6 @@ struct SabbathView: View {
 struct SabbathView_Previews: PreviewProvider {
     static var previews: some View {
         SabbathView(date: .constant(Date()))
+            .environmentObject(AffirmationsViewModel())
     }
 }

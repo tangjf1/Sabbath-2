@@ -8,15 +8,17 @@
 import Foundation
 import FirebaseFirestore
 
+@MainActor
 class EventViewModel: ObservableObject {
-    @Published var event = Event()
+    @Published var isLoading = false
     
     func saveEvent(user: User, event: Event, eventCollection: String) async -> Bool {
         let db = Firestore.firestore()
-        
+        isLoading = true
         
         guard let userID = user.id else {
             print("😡 ERROR: user.id = nil")
+            isLoading = false
             return false
         }
         let collectionString = "users/\(userID)/\(event.startDate.getFullDate())"
@@ -27,26 +29,32 @@ class EventViewModel: ObservableObject {
         do {
             let _ = try await db.collection(collectionString).addDocument(data: event.dictionary)
             print("😎 Data added successfully!")
+            isLoading = false
             return true
         } catch {
             print("😡 ERROR: could not create new user in 'users' \(error.localizedDescription)")
+            isLoading = false
             return false
         }
     }
     
     func deleteEvent(user: User, event: Event, eventCollection: String) async -> Bool {
         let db = Firestore.firestore()
+        isLoading = true
         guard let userID = user.id, let eventID = event.id else {
             print("😡 ERROR: user.id = \(user.id ?? "nil"), event.id = \(event.id ?? "nil")")
+            isLoading = false
             return false
         }
         // event must already exist, so delete
         do {
             let _ = try await db.collection("users").document(userID).collection(eventCollection).document(eventID).delete()
             print("🗑 Document deleted successfully!")
+            isLoading = false
             return true
         } catch {
             print("😡 ERROR: Could not delete data in event \(error.localizedDescription)")
+            isLoading = false
             return false
         }
     }

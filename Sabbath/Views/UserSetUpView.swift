@@ -126,7 +126,6 @@ struct UserSetUpView: View {
             }
         }
         .onAppear{
-            print("users: \(userVM.users), current user: \(user.email), newUser: \(newUser)")
             switch user.sabbath {
             case "Sun":
                 selectedSabbath = .Sun

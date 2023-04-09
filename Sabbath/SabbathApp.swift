@@ -23,12 +23,14 @@ struct SabbathApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var userVM = UserViewModel()
     @StateObject var locationManager = LocationManager()
+    @StateObject var affirmationsVM = AffirmationsViewModel()
     var body: some Scene {
         WindowGroup {
             NavigationView {
                 LoginView()
                     .environmentObject(userVM)
                     .environmentObject(locationManager)
+                    .environmentObject(affirmationsVM)
             }
         }
     }

@@ -12,9 +12,7 @@ import FirebaseFirestoreSwift
 
 @MainActor
 class UserViewModel: ObservableObject {
-    @Published var user = User()
-    @Published var users = [User]()
-    
+
     func saveUser(user: User) async -> Bool {
         let db = Firestore.firestore()
         let userID = user.id ?? Auth.auth().currentUser?.uid ?? ""

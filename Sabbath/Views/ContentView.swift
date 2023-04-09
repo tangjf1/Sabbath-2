@@ -14,6 +14,7 @@ import FirebaseFirestoreSwift
 struct ContentView: View {
     @EnvironmentObject var userVM: UserViewModel
     @EnvironmentObject var locationManager: LocationManager
+    @EnvironmentObject var affirmationsVM: AffirmationsViewModel
     @FirestoreQuery(collectionPath: "users") var users: [User]
     @Environment(\.dismiss) private var dismiss
     @State var currentDate = Date()
@@ -71,5 +72,6 @@ struct ContentView_Previews: PreviewProvider {
         ContentView(previewRunning: true)
             .environmentObject(LocationManager())
             .environmentObject(UserViewModel())
+            .environmentObject(AffirmationsViewModel())
     }
 }

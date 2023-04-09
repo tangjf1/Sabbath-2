@@ -17,7 +17,7 @@ struct CalendarMonthView: View {
     @Binding var selectedDate: Date
     @State var month = Date()
     var user: User {
-        return users.first(where: {$0.email == Auth.auth().currentUser?.email ?? ""}) ?? User()
+        return users.first(where: {$0.email == Auth.auth().currentUser?.email ?? "none"}) ?? User()
     }
     private let monthYearFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -25,7 +25,7 @@ struct CalendarMonthView: View {
         return formatter
     }()
     
-    @FirestoreQuery(collectionPath: "users/\(Auth.auth().currentUser?.uid ?? "")/\(Date().getFullDate())") var events: [Event]
+    @FirestoreQuery(collectionPath: "users/\(Auth.auth().currentUser?.uid ?? "none")/\(Date().getFullDate())") var events: [Event]
     
     var body: some View {
         VStack {
@@ -67,7 +67,7 @@ struct DateCell: View {
     let mainMonth: Date
     let sabbath: String
     
-    @FirestoreQuery(collectionPath: "users/\(Auth.auth().currentUser?.uid ?? "")/\(Date().getFullDate())") var events: [Event]
+    @FirestoreQuery(collectionPath: "users/\(Auth.auth().currentUser?.uid ?? "none")/\(Date().getFullDate())") var events: [Event]
     
     var isSabbath: Bool {
         return date.getDayOfWeek() == sabbath
@@ -94,7 +94,7 @@ struct DateCell: View {
         .background(isSabbath ? Color("SabbathPink").opacity(isCurrentMonth ? 0.5 : 0.2) : Color.clear)
         .cornerRadius(8)
         .onAppear{
-            $events.path = "users/\(Auth.auth().currentUser?.uid ?? "")/\(date.getFullDate())"
+            $events.path = "users/\(Auth.auth().currentUser?.uid ?? "none")/\(date.getFullDate())"
         }
     }
 }

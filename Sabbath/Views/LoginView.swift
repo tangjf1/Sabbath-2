@@ -14,7 +14,7 @@ struct LoginView: View {
     enum Field {
         case email, password
     }
-    @EnvironmentObject var userVM: UserViewModel
+
     @State private var email = ""
     @State private var password = ""
     @State private var showingAlert = false
@@ -137,6 +137,5 @@ struct LoginView: View {
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView()
-            .environmentObject(UserViewModel())
     }
 }

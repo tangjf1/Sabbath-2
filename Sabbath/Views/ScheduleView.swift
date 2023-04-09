@@ -18,7 +18,7 @@ struct ScheduleView: View {
         return users.first(where: {$0.email == Auth.auth().currentUser?.email ?? ""}) ?? User()
     }
     @Binding var selectedDate: Date
-    @FirestoreQuery(collectionPath: "users/\(Auth.auth().currentUser?.uid ?? "")/\(Date().getFullDate())") var events: [Event]
+    @FirestoreQuery(collectionPath: "users/\(Auth.auth().currentUser?.uid ?? "none")/\(Date().getFullDate())") var events: [Event]
     
     var body: some View {
         VStack {
@@ -34,8 +34,11 @@ struct ScheduleView: View {
             .font(.callout)
             .listStyle(.plain)
         }
+        .onAppear {
+            $events.path = "users/\(Auth.auth().currentUser?.uid ?? "none")/\(selectedDate.getFullDate())"
+        }
         .onChange(of: selectedDate) { newValue in
-            $events.path = "users/\(Auth.auth().currentUser?.uid ?? "")/\(selectedDate.getFullDate())"
+            $events.path = "users/\(Auth.auth().currentUser?.uid ?? "none")/\(selectedDate.getFullDate())"
         }
     }
 }
