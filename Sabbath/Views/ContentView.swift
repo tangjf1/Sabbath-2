@@ -12,14 +12,12 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct ContentView: View {
+    @EnvironmentObject var userVM: UserViewModel
     @EnvironmentObject var locationManager: LocationManager
     @FirestoreQuery(collectionPath: "users") var users: [User]
     @Environment(\.dismiss) private var dismiss
     @State var currentDate = Date()
     @State var selectedDate = Date()
-    @State var calTasks: [Date: [CalendarTask]] = [:]
-    @State var reminders: [Date: [Reminder]] = [:]
-    //@State var events: [Date: [Event]] = [:]
     @State private var showEventSheet = false
     
     var user: User {
@@ -29,17 +27,12 @@ struct ContentView: View {
     // addressing the PreviewProvider crash
     var previewRunning = false
     
-    @State var selectedDateEvents: [Event] = []
-    
-    // variable with correct user.id after onAppear of view
-    @FirestoreQuery(collectionPath: "users/\(Auth.auth().currentUser?.uid ?? "")/\(Date().getFullDate())") var events: [Event]
-    
     var body: some View {
         NavigationStack {
             VStack {
                 CalendarMonthView(selectedDate: $selectedDate)
                     .padding()
-                ScheduleView(user: user, selectedDate: $selectedDate)
+                ScheduleView(selectedDate: $selectedDate)
             }
             .sheet(isPresented: $showEventSheet) {
                 EventDetailView(user: user, event: Event(startDate: selectedDate, endDate: (selectedDate + (60*60))))
@@ -71,5 +64,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(previewRunning: true)
             .environmentObject(LocationManager())
+            .environmentObject(UserViewModel())
     }
 }

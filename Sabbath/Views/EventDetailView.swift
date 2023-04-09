@@ -30,6 +30,7 @@ struct EventDetailView: View {
     @State private var showPlaceLookupSheet = false
     // to show alert if user tries to write a review on new Spot before saving it first
     @State private var showSaveAlert = false
+    @State var oldEventDate = Date().getFullDate()
     var body: some View {
         NavigationStack {
             List{
@@ -97,8 +98,9 @@ struct EventDetailView: View {
                             saveAlert = .endDate
                             showSaveAlert.toggle()
                         } else {
+                            print("oldEventDate: \(oldEventDate)")
                             Task {
-                                let success = await eventVM.saveEvent(user: user, event: event)
+                                let success = await eventVM.saveEvent(user: user, event: event, eventCollection: oldEventDate)
                                 
                                 if success {
                                     dismiss()
@@ -116,12 +118,12 @@ struct EventDetailView: View {
                         Spacer()
                         Button {
                             Task {
-                                let success = await eventVM.deleteEvent(user: user, event: event)
+                                let success = await eventVM.deleteEvent(user: user, event: event, eventCollection: oldEventDate)
                                 
                                 if success {
                                     dismiss()
                                 } else {
-                                    print("😡 ERROR deleting data in ReviewView")
+                                    print("😡 ERROR deleting data in EventView")
                                 }
                             }
                         } label: {
@@ -139,6 +141,10 @@ struct EventDetailView: View {
             }
             .navigationBarBackButtonHidden()
             .navigationBarTitleDisplayMode(.inline)
+        }
+        .onAppear {
+            oldEventDate = event.startDate.getFullDate()
+            print("oldEventDate: \(oldEventDate)")
         }
     }
 }

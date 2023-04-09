@@ -21,33 +21,10 @@ class UserViewModel: ObservableObject {
         do {
             let _ = try await db.collection("users").document(userID).setData(user.dictionary)
             print("😎 Data added successfully!")
-            Task {
-                await print(getAllUsers())
-            }
             return true
         } catch {
             print("😡 ERROR: could not save new user in 'users' \(error.localizedDescription)")
             return false
         }
-    }
-    
-    func getAllUsers() async -> Bool {
-        let db = Firestore.firestore()
-        do {
-            let querySnapshot = try await db.collection("users").getDocuments()
-            print("DOCUMENTS RETRIEVED")
-            for doc in querySnapshot.documents {
-                print("\(doc.documentID) => \(doc.data())")
-            }
-            return true
-        } catch {
-            print("😡 ERROR: could not load users in 'users' \(error.localizedDescription)")
-            return false
-        }
-    }
-    
-    func getCurrentUser() -> User {
-        @FirestoreQuery(collectionPath: "users") var users: [User]
-        return users.first(where: {$0.email == Auth.auth().currentUser?.email ?? "" }) ?? User()
     }
 }

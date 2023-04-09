@@ -13,7 +13,10 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct ScheduleView: View {
-    @State var user: User
+    @FirestoreQuery(collectionPath: "users") var users: [User]
+    var user: User {
+        return users.first(where: {$0.email == Auth.auth().currentUser?.email ?? ""}) ?? User()
+    }
     @Binding var selectedDate: Date
     @FirestoreQuery(collectionPath: "users/\(Auth.auth().currentUser?.uid ?? "")/\(Date().getFullDate())") var events: [Event]
     
@@ -40,6 +43,6 @@ struct ScheduleView: View {
 
 struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {
-        ScheduleView(user: User(), selectedDate: .constant(Date()))
+        ScheduleView(selectedDate: .constant(Date()))
     }
 }
