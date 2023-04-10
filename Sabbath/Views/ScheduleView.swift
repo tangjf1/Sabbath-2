@@ -35,9 +35,12 @@ struct ScheduleView: View {
             .listStyle(.plain)
         }
         .onAppear {
+            print("users/\(Auth.auth().currentUser?.uid ?? "none")/\(selectedDate.getFullDate())")
             $events.path = "users/\(Auth.auth().currentUser?.uid ?? "none")/\(selectedDate.getFullDate())"
+            print("events: \(events)")
         }
-        .onChange(of: selectedDate) { newValue in
+        .onChange(of: selectedDate) { _ in
+            print("users/\(Auth.auth().currentUser?.uid ?? "none")/\(selectedDate.getFullDate())")
             $events.path = "users/\(Auth.auth().currentUser?.uid ?? "none")/\(selectedDate.getFullDate())"
         }
     }

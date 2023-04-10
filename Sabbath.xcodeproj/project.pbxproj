@@ -15,7 +15,6 @@
 		DC23759E29E09468004423E9 /* EventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23759D29E09468004423E9 /* EventViewModel.swift */; };
 		DC2461F929E1A50C0084209C /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2461F829E1A50B0084209C /* ScheduleView.swift */; };
 		DC2461FB29E2F6DA0084209C /* SabbathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2461FA29E2F6DA0084209C /* SabbathView.swift */; };
-		DC2461FD29E363D30084209C /* AffirmationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2461FC29E363D30084209C /* AffirmationsViewModel.swift */; };
 		DC4E02D129DCD52C005A0343 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4E02D029DCD52C005A0343 /* LoginView.swift */; };
 		DC5029F129DC9EDB00A2E762 /* SabbathApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5029F029DC9EDB00A2E762 /* SabbathApp.swift */; };
 		DC5029F329DC9EDB00A2E762 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5029F229DC9EDB00A2E762 /* ContentView.swift */; };
@@ -27,9 +26,9 @@
 		DC502A0629DCA09A00A2E762 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DC502A0529DCA09A00A2E762 /* FirebaseFirestoreSwift */; };
 		DC502A0829DCA09A00A2E762 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = DC502A0729DCA09A00A2E762 /* FirebaseStorage */; };
 		DC502A0C29DCA47100A2E762 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC502A0B29DCA47100A2E762 /* Event.swift */; };
-		DC502A1029DCA4AA00A2E762 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC502A0F29DCA4AA00A2E762 /* Reminder.swift */; };
 		DC502A1429DCB1AF00A2E762 /* CalendarMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC502A1329DCB1AF00A2E762 /* CalendarMonthView.swift */; };
-		DC9F717829DDACEF00C9607B /* CalendarTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9F717729DDACEF00C9607B /* CalendarTask.swift */; };
+		DC7626CB29E4434E0008EBB2 /* SabbathViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7626CA29E4434E0008EBB2 /* SabbathViewModel.swift */; };
+		DC7626CD29E446AA0008EBB2 /* SabbathEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7626CC29E446AA0008EBB2 /* SabbathEvent.swift */; };
 		DCC61E2529DD3E7D00978239 /* UserSetUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC61E2429DD3E7D00978239 /* UserSetUpView.swift */; };
 		DCC61E2729DD3EB100978239 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC61E2629DD3EB100978239 /* User.swift */; };
 		DCC61E2929DD416200978239 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC61E2829DD416200978239 /* UserViewModel.swift */; };
@@ -44,7 +43,6 @@
 		DC23759D29E09468004423E9 /* EventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewModel.swift; sourceTree = "<group>"; };
 		DC2461F829E1A50B0084209C /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
 		DC2461FA29E2F6DA0084209C /* SabbathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SabbathView.swift; sourceTree = "<group>"; };
-		DC2461FC29E363D30084209C /* AffirmationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AffirmationsViewModel.swift; sourceTree = "<group>"; };
 		DC4E02D029DCD52C005A0343 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DC4E02D429DCDCFA005A0343 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DC5029ED29DC9EDB00A2E762 /* Sabbath.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sabbath.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,9 +52,9 @@
 		DC5029F729DC9EE400A2E762 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DC5029FE29DCA01D00A2E762 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DC502A0B29DCA47100A2E762 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		DC502A0F29DCA4AA00A2E762 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		DC502A1329DCB1AF00A2E762 /* CalendarMonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMonthView.swift; sourceTree = "<group>"; };
-		DC9F717729DDACEF00C9607B /* CalendarTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTask.swift; sourceTree = "<group>"; };
+		DC7626CA29E4434E0008EBB2 /* SabbathViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SabbathViewModel.swift; sourceTree = "<group>"; };
+		DC7626CC29E446AA0008EBB2 /* SabbathEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SabbathEvent.swift; sourceTree = "<group>"; };
 		DCC61E2429DD3E7D00978239 /* UserSetUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetUpView.swift; sourceTree = "<group>"; };
 		DCC61E2629DD3EB100978239 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DCC61E2829DD416200978239 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
@@ -122,8 +120,7 @@
 				DC23759329E07BD7004423E9 /* Place.swift */,
 				DCC61E2629DD3EB100978239 /* User.swift */,
 				DC502A0B29DCA47100A2E762 /* Event.swift */,
-				DC502A0F29DCA4AA00A2E762 /* Reminder.swift */,
-				DC9F717729DDACEF00C9607B /* CalendarTask.swift */,
+				DC7626CC29E446AA0008EBB2 /* SabbathEvent.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -150,7 +147,7 @@
 				DC23759629E07C09004423E9 /* PlaceViewModel.swift */,
 				DCC61E2829DD416200978239 /* UserViewModel.swift */,
 				DC23759D29E09468004423E9 /* EventViewModel.swift */,
-				DC2461FC29E363D30084209C /* AffirmationsViewModel.swift */,
+				DC7626CA29E4434E0008EBB2 /* SabbathViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -237,6 +234,7 @@
 			files = (
 				DC23759E29E09468004423E9 /* EventViewModel.swift in Sources */,
 				DC23759829E07C09004423E9 /* PlaceViewModel.swift in Sources */,
+				DC7626CB29E4434E0008EBB2 /* SabbathViewModel.swift in Sources */,
 				DC23759429E07BD7004423E9 /* Place.swift in Sources */,
 				DC502A0C29DCA47100A2E762 /* Event.swift in Sources */,
 				DCC61E2529DD3E7D00978239 /* UserSetUpView.swift in Sources */,
@@ -245,15 +243,13 @@
 				DCC61E2929DD416200978239 /* UserViewModel.swift in Sources */,
 				DC2461FB29E2F6DA0084209C /* SabbathView.swift in Sources */,
 				DC5029F329DC9EDB00A2E762 /* ContentView.swift in Sources */,
-				DC2461FD29E363D30084209C /* AffirmationsViewModel.swift in Sources */,
 				DCC61E2729DD3EB100978239 /* User.swift in Sources */,
 				DC23759A29E07D05004423E9 /* PlaceLookupView.swift in Sources */,
-				DC9F717829DDACEF00C9607B /* CalendarTask.swift in Sources */,
 				DC23759729E07C09004423E9 /* LocationManager.swift in Sources */,
-				DC502A1029DCA4AA00A2E762 /* Reminder.swift in Sources */,
 				DC5029F129DC9EDB00A2E762 /* SabbathApp.swift in Sources */,
 				DC502A1429DCB1AF00A2E762 /* CalendarMonthView.swift in Sources */,
 				DC2461F929E1A50C0084209C /* ScheduleView.swift in Sources */,
+				DC7626CD29E446AA0008EBB2 /* SabbathEvent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,8 +14,9 @@ import FirebaseFirestoreSwift
 struct ContentView: View {
     @EnvironmentObject var userVM: UserViewModel
     @EnvironmentObject var locationManager: LocationManager
-    @EnvironmentObject var affirmationsVM: AffirmationsViewModel
+    @EnvironmentObject var sabbathVM: SabbathViewModel
     @FirestoreQuery(collectionPath: "users") var users: [User]
+    @FirestoreQuery(collectionPath: "users/\(Auth.auth().currentUser?.uid ?? "")/sabbaths") var sabbaths: [SabbathEvent]
     @Environment(\.dismiss) private var dismiss
     @State var currentDate = Date()
     @State var selectedDate = Date()
@@ -38,7 +39,18 @@ struct ContentView: View {
                     Text("Schedule for \(selectedDate.formatted(date: .abbreviated, time: .omitted))")
                     ScheduleView(selectedDate: $selectedDate)
                 } else {
-                    SabbathView(date: $selectedDate)
+                    List {
+                        NavigationLink {
+                            SabbathView(date: selectedDate, sabbathEvent: getSabbath() )
+                        } label: {
+                            VStack {
+                                Text("Sabbath on \(selectedDate.formatted(date: .abbreviated, time: .omitted))")
+                                Image(selectedDate.getDayOfMonth())
+                                    .resizable()
+                                    .scaledToFit()
+                                .cornerRadius(8)                            }
+                        }
+                    }.listStyle(.plain)
                 }
             }
             .sheet(isPresented: $showEventSheet) {
@@ -64,6 +76,10 @@ struct ContentView: View {
             }
         }
     }
+    func getSabbath() -> SabbathEvent {
+        let returned = sabbaths.first(where: {$0.id == selectedDate.getFullDate()}) ?? SabbathEvent(date: selectedDate.getFullDate())
+        return returned
+    }
 }
 
 
@@ -72,6 +88,6 @@ struct ContentView_Previews: PreviewProvider {
         ContentView(previewRunning: true)
             .environmentObject(LocationManager())
             .environmentObject(UserViewModel())
-            .environmentObject(AffirmationsViewModel())
+            .environmentObject(SabbathViewModel())
     }
 }
