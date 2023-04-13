@@ -33,6 +33,7 @@ struct PlaceLookupView: View {
             }
             .listStyle(.plain)
             .searchable(text: $searchText)
+            .autocorrectionDisabled()
             .onChange(of: searchText, perform: { text in
                 if !text.isEmpty {
                     placeVM.search(text: text, region: locationManager.region)

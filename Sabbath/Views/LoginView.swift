@@ -60,7 +60,7 @@ struct LoginView: View {
             }
             .textFieldStyle(.roundedBorder)
             .overlay{
-                RoundedRectangle(cornerRadius: 5).stroke(.gray, lineWidth: 2)
+                RoundedRectangle(cornerRadius: 5).stroke(.gray.opacity(0.5), lineWidth: 1)
             }
             .padding(.horizontal)
             
@@ -79,7 +79,7 @@ struct LoginView: View {
             .disabled(buttonDisabled)
             .buttonStyle(.borderedProminent)
             .tint(Color.pink.opacity(0.5))
-            .font(.title2)
+            .font(.title3)
             .padding(.top)
         }
         .alert(alertMesseage, isPresented: $showingAlert) {
@@ -92,7 +92,9 @@ struct LoginView: View {
             }
         }
         .fullScreenCover(isPresented: $presentUserSetUpSheet) {
-            UserSetUpView(user: User(email: email))
+            NavigationStack {
+                UserSetUpView(user: User(email: email))
+            }
         }
         .fullScreenCover(isPresented: $presentContentViewSheet) {
             ContentView()

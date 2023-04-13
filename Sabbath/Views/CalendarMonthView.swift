@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import Foundation
-import Combine
 import Firebase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
@@ -25,13 +23,14 @@ struct CalendarMonthView: View {
         return formatter
     }()
     
-    @FirestoreQuery(collectionPath: "users/\(Auth.auth().currentUser?.uid ?? "none")/\(Date().getFullDate())") var events: [Event]
+    @FirestoreQuery(collectionPath: "users/\(Auth.auth().currentUser?.uid ?? "tGeWm6jBzXOz0kxnuBLtl9dd3KP2")/\(Date().getFullDate())") var events: [Event]
     
     var body: some View {
         VStack {
             HStack {
                 Button{
-                    month = Calendar.current.date(byAdding: .month, value: -1, to: month)!
+                    month = Calendar.current.date(byAdding: .month, value: -1, to: selectedDate)!
+                    selectedDate = month
                 } label: {
                     Image(systemName: "chevron.left")
                 }
@@ -39,7 +38,8 @@ struct CalendarMonthView: View {
                 Text("\(month, formatter: monthYearFormatter)").font(.title3)
                 Spacer()
                 Button{
-                    month = Calendar.current.date(byAdding: .month, value: 1, to: month)!
+                    month = Calendar.current.date(byAdding: .month, value: 1, to: selectedDate)!
+                    selectedDate = month
                 } label: {
                     Image(systemName: "chevron.right")
                 }
@@ -54,10 +54,11 @@ struct CalendarMonthView: View {
                         }
                 }
             }
-            .onAppear{
-            print("selected date: \(selectedDate)")
-            }
         }
+    }
+    
+    func getWeekNumbers() {
+        
     }
 }
 
@@ -124,6 +125,12 @@ extension Date {
         return dateFormatter.string(from: self)
     }
     
+    func getDayOfWeekNum() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "e"
+        return dateFormatter.string(from: self)
+    }
+    
     func getDatesForMonth() -> [Date] {
         let calendar = Calendar.current
         let startDate = calendar.date(from: calendar.dateComponents([.year, .month], from: calendar.startOfDay(for: self)))!
@@ -132,7 +139,12 @@ extension Date {
         let numDaysInAWeek = 7
         let firstOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: self))!
         let startOfMonth = calendar.date(byAdding: .day, value: -calendar.component(.weekday, from: firstOfMonth) + 1, to: firstOfMonth)!
-        return (0 ..< numDaysInAWeek * 6).map { i in
+        
+        let daysInMonth = Int(startDate.getDayOfWeekNum())! + range.endIndex-2
+
+        let numberOfWeeks = (daysInMonth % 7 != 0 ? (daysInMonth / 7) + 1 : (daysInMonth / 7) )
+        
+        return (0 ..< numDaysInAWeek * numberOfWeeks).map { i in
             calendar.date(byAdding: .day, value: i, to: startOfMonth)!
         }
     }

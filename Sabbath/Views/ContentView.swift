@@ -5,29 +5,21 @@
 //  Created by Jasmine on 4/4/23.
 //
 import SwiftUI
-import Foundation
-import Combine
 import Firebase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct ContentView: View {
-    @EnvironmentObject var userVM: UserViewModel
-    @EnvironmentObject var locationManager: LocationManager
-    @EnvironmentObject var sabbathVM: SabbathViewModel
     @FirestoreQuery(collectionPath: "users") var users: [User]
-    @FirestoreQuery(collectionPath: "users/\(Auth.auth().currentUser?.uid ?? "")/sabbaths") var sabbaths: [SabbathEvent]
+    // only time user can see this view without being logged in is during previewProvider -> use test user for data
+    @FirestoreQuery(collectionPath: "users/\(Auth.auth().currentUser?.uid ?? "tGeWm6jBzXOz0kxnuBLtl9dd3KP2")/sabbaths") var sabbaths: [SabbathEvent]
     @Environment(\.dismiss) private var dismiss
-    @State var currentDate = Date()
     @State var selectedDate = Date()
     @State private var showEventSheet = false
     
     var user: User {
-        return users.first(where: {$0.email == Auth.auth().currentUser?.email ?? ""}) ?? User()
+        return users.first(where: {$0.email == Auth.auth().currentUser?.email ?? "test1@gmail.com"}) ?? User(id: "tGeWm6jBzXOz0kxnuBLtl9dd3KP2")
     }
-    
-    // addressing the PreviewProvider crash
-    var previewRunning = false
     
     var body: some View {
         NavigationStack {
@@ -50,6 +42,7 @@ struct ContentView: View {
                                     .scaledToFit()
                                 .cornerRadius(8)                            }
                         }
+                        .listRowSeparator(.hidden)
                     }.listStyle(.plain)
                 }
             }
@@ -59,14 +52,19 @@ struct ContentView: View {
             .toolbar {
                 if selectedDate.getDayOfWeek() != user.sabbath {
                     ToolbarItemGroup(placement: .bottomBar) {
-                        Button("Add to Schedule") {
+                        Button("Add Item to Schedule") {
                             showEventSheet.toggle()
                         }
                         .buttonStyle(.bordered)
                     }
                 }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    Text("Hello \(user.firstName) \(user.lastName)")
+                    HStack {
+                        Text("Hello")
+                        Text(user.firstName)
+                            .italic()
+                    }
+                    .font(.callout)
                     NavigationLink{
                         UserSetUpView(user: user)
                     } label: {
@@ -85,9 +83,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(previewRunning: true)
-            .environmentObject(LocationManager())
-            .environmentObject(UserViewModel())
-            .environmentObject(SabbathViewModel())
+        ContentView()
     }
 }

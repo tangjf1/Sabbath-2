@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
-import FirebaseFirestore
 import Firebase
+import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct UserSetUpView: View {
@@ -20,6 +20,8 @@ struct UserSetUpView: View {
     @State private var presentContentViewSheet = false
     @State private var backToLogin = false
     @State private var selectedSabbath: Sabbath = .Sun
+    @FocusState private var firstNameIsFocused: Bool
+    @FocusState private var lastNameIsFocused: Bool
     
     var body: some View {
         NavigationStack {
@@ -27,17 +29,17 @@ struct UserSetUpView: View {
                 if newUser {
                     VStack {
                         Text("Thank you for signing up with Sabbath!")
-                            .multilineTextAlignment(.center)
+                            .padding(.top)
                             .font(.title)
-                            .minimumScaleFactor(0.5)
-                            .lineLimit(1)
                             .foregroundColor((Color("SabbathBlue")))
                             .bold()
                         Text("Please enter in some additional information:")
-                            .multilineTextAlignment(.center)
                     }
+                    .multilineTextAlignment(.center)
+                    .minimumScaleFactor(0.5)
+                    .lineLimit(1)
                 } else {
-                    Text("View or Update User Information:")
+                    Text("View or Update Your Information:")
                             .multilineTextAlignment(.center)
                 }
                 
@@ -45,12 +47,18 @@ struct UserSetUpView: View {
                     Text("First Name")
                         .bold()
                     TextField("Enter First Name", text: $user.firstName)
+                        .autocorrectionDisabled()
                         .textFieldStyle(.roundedBorder)
+                        .submitLabel(.done)
+                        .focused($firstNameIsFocused)
                         .padding(.bottom)
                     
                     Text("Last Name")
                         .bold()
                     TextField("Enter Last Name", text: $user.lastName)
+                        .autocorrectionDisabled()
+                        .submitLabel(.done)
+                        .focused($lastNameIsFocused)
                         .textFieldStyle(.roundedBorder)
                 }
                 
@@ -87,7 +95,25 @@ struct UserSetUpView: View {
             .fullScreenCover(isPresented: $backToLogin) {
                 LoginView()
             }
+            .navigationBarBackButtonHidden()
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        if newUser {
+                            let user = Auth.auth().currentUser
+                            user?.delete { error in
+                              if let error = error {
+                                  print("ERROR: \(error.localizedDescription)")
+                              } else {
+                                print("Success! Account Deleted")
+                              }
+                            }
+                        }
+                        dismiss()
+                    } label: {
+                        Text("\(newUser ? "Cancel" : "Back")")
+                    }
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
                         Task {
@@ -109,7 +135,9 @@ struct UserSetUpView: View {
                     .disabled(user.firstName.isEmpty || user.lastName.isEmpty)
                 }
                 
-                if !newUser {
+                
+                
+                if !newUser  {
                     ToolbarItem(placement: .bottomBar) {
                         Button("Sign Out") {
                             do {

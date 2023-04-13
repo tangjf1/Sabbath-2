@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import MapKit
 
 struct EventDetailView: View {
     enum SaveAlert {
@@ -24,30 +23,34 @@ struct EventDetailView: View {
     @State private var saveAlert = SaveAlert.sabbath
     @Environment(\.dismiss) private var dismiss
     @StateObject var eventVM = EventViewModel()
-    @EnvironmentObject var locationManager: LocationManager
     @State var user: User
     @State var event: Event
     @State private var showPlaceLookupSheet = false
     // to show alert if user tries to write a review on new Spot before saving it first
     @State private var showSaveAlert = false
     @State var oldEventDate = Date().getFullDate()
+    @FocusState private var notesIsFocused: Bool
     var body: some View {
         NavigationStack {
             ZStack {
                 List{
-                    TextField("Event Title", text: $event.title)
+                    TextField("Title", text: $event.title)
                         .font(.title)
                         .textFieldStyle(.roundedBorder)
                         .listRowSeparator(.hidden)
                     
-                    Toggle("Set Notification Before Event:", isOn: $event.notification )
+                    Toggle("Set Notification for Reminder:", isOn: $event.notification )
                         .padding(.vertical)
+                        .tint(.accentColor)
                         .listRowSeparator(.hidden)
                     
-                    DatePicker("Event Start", selection: $event.startDate)
+                    DatePicker("Starting Time", selection: $event.startDate)
                         .listRowSeparator(.hidden)
+                        .onChange(of: event.startDate) { _ in
+                            event.endDate = event.startDate + (60*60)
+                        }
                     
-                    DatePicker("Event End", selection: $event.endDate)
+                    DatePicker("Ending Time", selection: $event.endDate)
                         .listRowSeparator(.hidden)
                         .padding(.bottom)
                     
@@ -77,6 +80,15 @@ struct EventDetailView: View {
                     
                     Text("Notes")
                     TextField("Notes", text: $event.description, axis: .vertical)
+                        .submitLabel(.done)
+                        .focused($notesIsFocused)
+                        .onChange(of: event.description) { newValue in
+                            guard let newValueLastChar = newValue.last else {return}
+                            if newValueLastChar == "\n" {
+                                event.description.removeLast()
+                                notesIsFocused = false
+                            }
+                        }
                         .textFieldStyle(.roundedBorder)
                         .listRowSeparator(.hidden)
                 }
@@ -160,7 +172,6 @@ struct EventDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             EventDetailView(user: User(), event: Event(id: "12345"))
-                .environmentObject(LocationManager())
         }
     }
 }

@@ -6,17 +6,13 @@
 //
 
 import SwiftUI
-import Foundation
-import Combine
-import Firebase
-import FirebaseFirestore
-import FirebaseFirestoreSwift
 
 struct SabbathView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var sabbathVM: SabbathViewModel
     @State var date: Date
     @State var sabbathEvent: SabbathEvent
+    @FocusState private var textFieldIsFocused: Bool
     var body: some View {
         NavigationStack{
             ZStack {
@@ -38,6 +34,15 @@ struct SabbathView: View {
                     
                     TextField("  Write your thoughts and reflections here", text: $sabbathEvent.journalEntry, axis: .vertical)
                         .font(.callout)
+                        .submitLabel(.done)
+                        .focused($textFieldIsFocused)
+                        .onChange(of: sabbathEvent.journalEntry) { newValue in
+                            guard let newValueLastChar = newValue.last else {return}
+                            if newValueLastChar == "\n" {
+                                sabbathEvent.journalEntry.removeLast()
+                                textFieldIsFocused = false
+                            }
+                        }
                         .frame(maxHeight: .infinity, alignment: .topLeading)
                         .overlay{
                             RoundedRectangle(cornerRadius: 5).stroke(.gray.opacity(0.25), lineWidth: 1)

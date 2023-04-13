@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import Foundation
-import Combine
 import Firebase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
@@ -15,10 +13,12 @@ import FirebaseFirestoreSwift
 struct ScheduleView: View {
     @FirestoreQuery(collectionPath: "users") var users: [User]
     var user: User {
-        return users.first(where: {$0.email == Auth.auth().currentUser?.email ?? ""}) ?? User()
+        // only time user can see this view without being logged in is during previewProvider -> use test user for data
+        return users.first(where: {$0.email == Auth.auth().currentUser?.email ?? "tGeWm6jBzXOz0kxnuBLtl9dd3KP2"}) ?? User()
     }
     @Binding var selectedDate: Date
-    @FirestoreQuery(collectionPath: "users/\(Auth.auth().currentUser?.uid ?? "none")/\(Date().getFullDate())") var events: [Event]
+    // only time user can see this view without being logged in is during previewProvider -> use test user for data
+    @FirestoreQuery(collectionPath: "users/\(Auth.auth().currentUser?.uid ?? "tGeWm6jBzXOz0kxnuBLtl9dd3KP2")/\(Date().getFullDate())") var events: [Event]
     
     var body: some View {
         VStack {
@@ -35,13 +35,10 @@ struct ScheduleView: View {
             .listStyle(.plain)
         }
         .onAppear {
-            print("users/\(Auth.auth().currentUser?.uid ?? "none")/\(selectedDate.getFullDate())")
-            $events.path = "users/\(Auth.auth().currentUser?.uid ?? "none")/\(selectedDate.getFullDate())"
-            print("events: \(events)")
+            $events.path = "users/\(Auth.auth().currentUser?.uid ?? "tGeWm6jBzXOz0kxnuBLtl9dd3KP2")/\(selectedDate.getFullDate())"
         }
         .onChange(of: selectedDate) { _ in
-            print("users/\(Auth.auth().currentUser?.uid ?? "none")/\(selectedDate.getFullDate())")
-            $events.path = "users/\(Auth.auth().currentUser?.uid ?? "none")/\(selectedDate.getFullDate())"
+            $events.path = "users/\(Auth.auth().currentUser?.uid ?? "tGeWm6jBzXOz0kxnuBLtl9dd3KP2")/\(selectedDate.getFullDate())"
         }
     }
 }

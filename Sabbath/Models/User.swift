@@ -19,7 +19,7 @@ struct User: Identifiable, Codable, Equatable {
     var firstName = ""
     var lastName = ""
     var sabbath: String = Sabbath.Sun.rawValue
-    var birthday = Date()
+    var birthday = Date() - (60*60*24*365*10)
     
     var dictionary: [String: Any] {
         return  ["email" : email, "firstName" : firstName, "lastName": lastName, "sabbath": sabbath, "birthday": Timestamp(date: birthday)]
