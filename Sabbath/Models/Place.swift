@@ -1,6 +1,5 @@
 //
 //  Place.swift
-//  PlaceLookupDemo
 //
 //  Created by Jasmine on 3/23/23.
 //
