@@ -32,6 +32,10 @@
 		DCC61E2529DD3E7D00978239 /* UserSetUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC61E2429DD3E7D00978239 /* UserSetUpView.swift */; };
 		DCC61E2729DD3EB100978239 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC61E2629DD3EB100978239 /* User.swift */; };
 		DCC61E2929DD416200978239 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC61E2829DD416200978239 /* UserViewModel.swift */; };
+		DCCB573529F1CD2800F207BF /* GoalRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCB573429F1CD2800F207BF /* GoalRatingView.swift */; };
+		DCD5044D29F0CB51001F3F54 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD5044C29F0CB50001F3F54 /* Weather.swift */; };
+		DCD5044F29F0D0D4001F3F54 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD5044E29F0D0D4001F3F54 /* WeatherViewModel.swift */; };
+		DCD5045129F0D7CC001F3F54 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD5045029F0D7CC001F3F54 /* WeatherView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +62,10 @@
 		DCC61E2429DD3E7D00978239 /* UserSetUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetUpView.swift; sourceTree = "<group>"; };
 		DCC61E2629DD3EB100978239 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DCC61E2829DD416200978239 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		DCCB573429F1CD2800F207BF /* GoalRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalRatingView.swift; sourceTree = "<group>"; };
+		DCD5044C29F0CB50001F3F54 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		DCD5044E29F0D0D4001F3F54 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
+		DCD5045029F0D7CC001F3F54 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +129,7 @@
 				DCC61E2629DD3EB100978239 /* User.swift */,
 				DC502A0B29DCA47100A2E762 /* Event.swift */,
 				DC7626CC29E446AA0008EBB2 /* SabbathEvent.swift */,
+				DCD5044C29F0CB50001F3F54 /* Weather.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -134,8 +143,10 @@
 				DC502A1329DCB1AF00A2E762 /* CalendarMonthView.swift */,
 				DC2461F829E1A50B0084209C /* ScheduleView.swift */,
 				DC2461FA29E2F6DA0084209C /* SabbathView.swift */,
+				DCCB573429F1CD2800F207BF /* GoalRatingView.swift */,
 				DC23759B29E07DBD004423E9 /* EventDetailView.swift */,
 				DC23759929E07D05004423E9 /* PlaceLookupView.swift */,
+				DCD5045029F0D7CC001F3F54 /* WeatherView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -148,6 +159,7 @@
 				DCC61E2829DD416200978239 /* UserViewModel.swift */,
 				DC23759D29E09468004423E9 /* EventViewModel.swift */,
 				DC7626CA29E4434E0008EBB2 /* SabbathViewModel.swift */,
+				DCD5044E29F0D0D4001F3F54 /* WeatherViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -236,17 +248,21 @@
 				DC23759829E07C09004423E9 /* PlaceViewModel.swift in Sources */,
 				DC7626CB29E4434E0008EBB2 /* SabbathViewModel.swift in Sources */,
 				DC23759429E07BD7004423E9 /* Place.swift in Sources */,
+				DCCB573529F1CD2800F207BF /* GoalRatingView.swift in Sources */,
 				DC502A0C29DCA47100A2E762 /* Event.swift in Sources */,
+				DCD5044F29F0D0D4001F3F54 /* WeatherViewModel.swift in Sources */,
 				DCC61E2529DD3E7D00978239 /* UserSetUpView.swift in Sources */,
 				DC23759C29E07DBD004423E9 /* EventDetailView.swift in Sources */,
 				DC4E02D129DCD52C005A0343 /* LoginView.swift in Sources */,
 				DCC61E2929DD416200978239 /* UserViewModel.swift in Sources */,
 				DC2461FB29E2F6DA0084209C /* SabbathView.swift in Sources */,
 				DC5029F329DC9EDB00A2E762 /* ContentView.swift in Sources */,
+				DCD5045129F0D7CC001F3F54 /* WeatherView.swift in Sources */,
 				DCC61E2729DD3EB100978239 /* User.swift in Sources */,
 				DC23759A29E07D05004423E9 /* PlaceLookupView.swift in Sources */,
 				DC23759729E07C09004423E9 /* LocationManager.swift in Sources */,
 				DC5029F129DC9EDB00A2E762 /* SabbathApp.swift in Sources */,
+				DCD5044D29F0CB51001F3F54 /* Weather.swift in Sources */,
 				DC502A1429DCB1AF00A2E762 /* CalendarMonthView.swift in Sources */,
 				DC2461F929E1A50C0084209C /* ScheduleView.swift in Sources */,
 				DC7626CD29E446AA0008EBB2 /* SabbathEvent.swift in Sources */,

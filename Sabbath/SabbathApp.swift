@@ -24,6 +24,7 @@ struct SabbathApp: App {
     @StateObject var userVM = UserViewModel()
     @StateObject var locationManager = LocationManager()
     @StateObject var sabbathVM = SabbathViewModel()
+    @StateObject var weatherVM = WeatherViewModel()
     var body: some Scene {
         WindowGroup {
             NavigationView {
@@ -31,6 +32,7 @@ struct SabbathApp: App {
                     .environmentObject(userVM)
                     .environmentObject(locationManager)
                     .environmentObject(sabbathVM)
+                    .environmentObject(weatherVM)
             }
         }
     }

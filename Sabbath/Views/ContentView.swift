@@ -10,6 +10,8 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct ContentView: View {
+    @EnvironmentObject var locationManager: LocationManager
+    @EnvironmentObject var weatherVM: WeatherViewModel
     @FirestoreQuery(collectionPath: "users") var users: [User]
     // only time user can see this view without being logged in is during previewProvider -> use test user for data
     @FirestoreQuery(collectionPath: "users/\(Auth.auth().currentUser?.uid ?? "tGeWm6jBzXOz0kxnuBLtl9dd3KP2")/sabbaths") var sabbaths: [SabbathEvent]
@@ -28,12 +30,15 @@ struct ContentView: View {
                     .padding()
                 
                 if selectedDate.getDayOfWeek() != user.sabbath {
-                    Text("Schedule for \(selectedDate.formatted(date: .abbreviated, time: .omitted))")
+                    HStack {
+                        Text("\(selectedDate.formatted(date: .abbreviated, time: .omitted))")
+                        WeatherView(selectedDate: $selectedDate)
+                    }
                     ScheduleView(selectedDate: $selectedDate)
                 } else {
                     List {
                         NavigationLink {
-                            SabbathView(date: selectedDate, sabbathEvent: getSabbath() )
+                            SabbathView(date: $selectedDate, sabbathEvent: getSabbath() )
                         } label: {
                             VStack {
                                 Text("Sabbath on \(selectedDate.formatted(date: .abbreviated, time: .omitted))")
@@ -84,5 +89,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(LocationManager())
+            .environmentObject(WeatherViewModel())
     }
 }

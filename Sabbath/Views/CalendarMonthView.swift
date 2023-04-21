@@ -46,12 +46,13 @@ struct CalendarMonthView: View {
                 
                 
             }
-            LazyVGrid(columns: Array(repeating: GridItem(), count: 7)) {
+            LazyVGrid(columns: Array(repeating: GridItem(), count: 7), spacing: 10) {
                 ForEach(month.getDatesForMonth().sorted(by: { $0 < $1 }), id: \.self) { date in
                     DateCell(date: date, isSelected: (selectedDate.getFullDate() == date.getFullDate()), mainMonth: month, sabbath: user.sabbath)
                         .onTapGesture {
                             selectedDate = date
                         }
+                        .frame(height: 40)
                 }
             }
         }
@@ -89,7 +90,7 @@ struct DateCell: View {
                 Circle().opacity(0).frame(width: 10, height: 10)
             }
         }
-        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 50)
+        .frame(minWidth: 0, maxWidth: .infinity)
         .disabled(!isSabbath)
         .overlay(RoundedRectangle(cornerRadius: 8).stroke((isSelected ? Color("SabbathBlue") : Color.clear), lineWidth: 4 ))
         .background(isSabbath ? Color("SabbathPink").opacity(isCurrentMonth ? 0.5 : 0.2) : Color.clear)
@@ -110,6 +111,12 @@ extension Date {
     func getFullDate() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yy"
+        return dateFormatter.string(from: self)
+    }
+    
+    func getFullDateForWeather() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter.string(from: self)
     }
     
