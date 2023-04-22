@@ -88,10 +88,10 @@ class WeatherViewModel: ObservableObject {
         if weatherOneDay.id != nil {
             if let i = dailyWeatherArray.firstIndex(where: { $0.id == date}){
                 dailyWeatherArray[i] = weatherOneDay
-                print("updating weather entry for: \(weatherOneDay.id!)")
+                print("updating weather entry for: \(weatherOneDay.id ?? "none")")
             } else {
                 dailyWeatherArray.append(weatherOneDay)
-                print("appending weather entry for: \(weatherOneDay.id!)")
+                print("appending weather entry for: \(weatherOneDay.id ?? "none")")
             }
         }
     }
@@ -142,10 +142,10 @@ class WeatherViewModel: ObservableObject {
                     dayWeatherEntry.temperature_2m_min = Double(period.temperature)
                     if let i = dailyWeatherArray.firstIndex(where: { $0.id == date}){
                         dailyWeatherArray[i] = dayWeatherEntry
-                        print("updating weather forecast for: \(dayWeatherEntry.id!)")
+                        print("updating weather forecast for: \(dayWeatherEntry.id ?? "none")")
                     } else {
                         dailyWeatherArray.append(dayWeatherEntry)
-                        print("appending weather forecast for: \(dayWeatherEntry.id!)")
+                        print("appending weather forecast for: \(dayWeatherEntry.id ?? "none")")
                     }
                 }
             }
