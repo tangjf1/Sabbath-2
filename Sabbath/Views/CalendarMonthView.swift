@@ -35,8 +35,22 @@ struct CalendarMonthView: View {
                     Image(systemName: "chevron.left")
                 }
                 Spacer()
-                Text("\(month, formatter: monthYearFormatter)").font(.title3)
-                Spacer()
+                VStack {
+                    Text("\(month, formatter: monthYearFormatter)").font(.title3)
+                    if selectedDate.getFullDate() != Date().getFullDate() {
+                        Button {
+                            selectedDate = Date()
+                            month = Date()
+                        } label: {
+                            Text("Jump Back to Today")
+                                .font(.caption2)
+                        }
+                    } else {
+                        Text(" ")
+                            .font(.caption2)
+                    }
+                }
+                    Spacer()
                 Button{
                     month = Calendar.current.date(byAdding: .month, value: 1, to: selectedDate)!
                     selectedDate = month
