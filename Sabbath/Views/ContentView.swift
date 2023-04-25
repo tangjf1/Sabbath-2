@@ -12,12 +12,15 @@ import FirebaseFirestoreSwift
 struct ContentView: View {
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var weatherVM: WeatherViewModel
+    @EnvironmentObject var userVM: UserViewModel
+    
     @FirestoreQuery(collectionPath: "users") var users: [User]
     // only time user can see this view without being logged in is during previewProvider -> use test user for data
     @FirestoreQuery(collectionPath: "users/\(Auth.auth().currentUser?.uid ?? "tGeWm6jBzXOz0kxnuBLtl9dd3KP2")/sabbaths") var sabbaths: [SabbathEvent]
     @Environment(\.dismiss) private var dismiss
     @State var selectedDate = Date()
     @State private var showEventSheet = false
+    @State private var imageURL: URL?
     
     var user: User {
         return users.first(where: {$0.email == Auth.auth().currentUser?.email ?? "test1@gmail.com"}) ?? User(id: "tGeWm6jBzXOz0kxnuBLtl9dd3KP2")
@@ -51,6 +54,16 @@ struct ContentView: View {
                     }.listStyle(.plain)
                 }
             }
+            .onAppear { // add to VStack - acts like .onAppear
+                Task {
+                    if let id = user.id { // if this isn't a new user id
+                        if let url = await userVM.getImageURL(id: id) { // It should have a url for the image (it may be "")
+                            imageURL = url
+                        print(imageURL ?? "no image URL")
+                        }
+                    }
+                }
+            }
             .sheet(isPresented: $showEventSheet) {
                 EventDetailView(user: user, event: Event(startDate: selectedDate, endDate: (selectedDate + (60*60))))
             }
@@ -63,19 +76,28 @@ struct ContentView: View {
                         .buttonStyle(.bordered)
                     }
                 }
-                
-                
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    HStack {
-                        Text("Hello")
-                        Text(user.firstName)
-                            .italic()
-                    }
-                    .font(.callout)
+                ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink{
                         UserSetUpView(user: user)
                     } label: {
-                        Image(systemName: "person.crop.square")
+                        HStack {
+                            Text("Hello")
+                            Text(user.firstName)
+                                .italic()
+                            AsyncImage(url: imageURL) { image in
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 20, height: 20)
+                                    .clipShape(Circle())
+                            } placeholder: {
+                                Image(systemName: "person.circle")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .font(.callout)
+                            }
+                        }
+                        .font(.callout)
                     }
                 }
             }
@@ -93,5 +115,6 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
             .environmentObject(LocationManager())
             .environmentObject(WeatherViewModel())
+            .environmentObject(UserViewModel())
     }
 }
